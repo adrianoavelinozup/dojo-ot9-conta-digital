@@ -37,6 +37,23 @@ public class ContaDigital {
         this.numeroConta = numeroConta;
         this.email = email;
     }
+    public ContaDigital(Long idCliente, String numeroConta, String email) {
+        this.idCliente = idCliente;
+        this.numeroConta = numeroConta;
+        this.email = email;
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public String getNumeroConta() {
+        return numeroConta;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     public void atualizarSaldo(ContaDigitalRequest request) {
         if (request.getTipoTransacao().equals(TipoTransacao.DEBITAR)) {

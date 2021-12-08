@@ -5,11 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/contasdigitas")
@@ -30,6 +28,6 @@ public class ContaDigitalController {
 
         contaDigitalRepository.save(contaDigital);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new ContaDigital(contaDigital.getIdCliente(), contaDigital.getNumeroConta(), contaDigital.getEmail()));
     }
 }
