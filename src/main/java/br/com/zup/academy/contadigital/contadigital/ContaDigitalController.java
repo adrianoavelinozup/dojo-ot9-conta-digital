@@ -1,10 +1,10 @@
 package br.com.zup.academy.contadigital.contadigital;
 
+import br.com.zup.academy.contadigital.contadigital.commons.errors.ApiResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -22,7 +22,7 @@ public class ContaDigitalController {
                                                @RequestBody @Valid ContaDigitalRequest request) {
 
         ContaDigital contaDigital = contaDigitalRepository.findByIdCliente(idCliente)
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiResponseException("Cliente não encontrado !" , HttpStatus.NOT_FOUND));
 
         contaDigital.atualizarSaldo(request);
 

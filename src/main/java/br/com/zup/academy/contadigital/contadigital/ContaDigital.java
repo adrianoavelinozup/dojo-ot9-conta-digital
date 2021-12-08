@@ -1,5 +1,8 @@
 package br.com.zup.academy.contadigital.contadigital;
 
+import br.com.zup.academy.contadigital.contadigital.commons.errors.ApiResponseException;
+import org.springframework.http.HttpStatus;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Positive;
@@ -56,7 +59,11 @@ public class ContaDigital {
     }
 
     public void atualizarSaldo(ContaDigitalRequest request) {
+
         if (request.getTipoTransacao().equals(TipoTransacao.DEBITAR)) {
+            if (request.getValor().compareTo(this.saldo) > 0) {
+                throw new ApiResponseException("saldo" , "Saldo insuficiente !" , HttpStatus.UNPROCESSABLE_ENTITY);
+            }
             this.saldo = new BigDecimal(this.saldo.toString()).subtract(request.getValor());
         } else {
             this.saldo = new BigDecimal(this.saldo.toString()).add(request.getValor());
