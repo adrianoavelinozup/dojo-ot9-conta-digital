@@ -46,7 +46,27 @@ class ContaDigitalControllerTest {
                         .contentType(MediaType.APPLICATION_JSON).content(request);
 
         // Corretude
+        mockMvc.perform(chamada)
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk()
+                );
+    }
 
+    @Test
+    void deveAtualizarSaldoAposDebitarNaContaERetornarStatus200() throws Exception {
+
+        // ambiente
+        ContaDigital contaDigital = new ContaDigital(1L,new BigDecimal("1000.0"),"1","adriano@zup.com.br");
+        contaDigitalRepository.save(contaDigital);
+
+        ContaDigitalRequest registra = new ContaDigitalRequest(new BigDecimal("20.0"),TipoTransacao.DEBITAR);
+        String request = mapper.writeValueAsString(registra);
+
+        // Ação
+        MockHttpServletRequestBuilder chamada = MockMvcRequestBuilders.post("/api/v1/contasdigitas/1/transacoes")
+                .contentType(MediaType.APPLICATION_JSON).content(request);
+
+        // Corretude
         mockMvc.perform(chamada)
                 .andExpect(
                         MockMvcResultMatchers.status().isOk()
