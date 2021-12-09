@@ -41,16 +41,16 @@ public class ContaDigital {
         this.email = email;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
     public String getNumeroConta() {
         return numeroConta;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
     }
 
     public void atualizarSaldo(ContaDigitalRequest request) {
