@@ -28,6 +28,6 @@ public class ContaDigitalController {
 
         contaDigitalRepository.save(contaDigital);
 
-        return ResponseEntity.ok(new ContaDigital(contaDigital.getIdCliente(), contaDigital.getNumeroConta(), contaDigital.getEmail()));
+        return ResponseEntity.ok(new ContaDigitalRetornoRequest(idCliente, contaDigital.getNumeroConta(), contaDigital.getEmail() ));
     }
 }

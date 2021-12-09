@@ -13,6 +13,10 @@ public class ContaDigitalRequest {
     @NotNull
     private TipoTransacao tipoTransacao;
 
+    @Deprecated
+    public ContaDigitalRequest() {
+    }
+
     public ContaDigitalRequest(BigDecimal valor, TipoTransacao tipoTransacao) {
         this.valor = valor;
         this.tipoTransacao = tipoTransacao;

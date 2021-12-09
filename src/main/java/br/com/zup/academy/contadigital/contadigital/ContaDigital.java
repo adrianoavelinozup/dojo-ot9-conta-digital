@@ -40,11 +40,6 @@ public class ContaDigital {
         this.numeroConta = numeroConta;
         this.email = email;
     }
-    public ContaDigital(Long idCliente, String numeroConta, String email) {
-        this.idCliente = idCliente;
-        this.numeroConta = numeroConta;
-        this.email = email;
-    }
 
     public Long getIdCliente() {
         return idCliente;
