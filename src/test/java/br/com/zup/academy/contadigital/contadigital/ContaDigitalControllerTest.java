@@ -120,4 +120,22 @@ class ContaDigitalControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isNotFound() );
     }
+
+    @Test
+    void naoDeveCreditarSaldoSeIdClientNaoExistirDeveRetornarStatus404() throws Exception {
+
+        // ambiente
+        ContaDigital contaDigital = new ContaDigital(1L,new BigDecimal("1000.0"),"1","adriano@zup.com.br");
+        contaDigitalRepository.save(contaDigital);
+
+        // Ação
+        ContaDigitalRequest body = new ContaDigitalRequest(new BigDecimal("20.0"),TipoTransacao.CREDITAR);
+        MockHttpServletRequestBuilder request = post("/api/v1/contasdigitas/100/transacoes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(body));
+
+        // Corretude
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound() );
+    }
 }
