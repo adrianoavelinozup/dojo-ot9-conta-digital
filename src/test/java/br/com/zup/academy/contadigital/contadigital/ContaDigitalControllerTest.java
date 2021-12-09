@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -42,13 +44,13 @@ class ContaDigitalControllerTest {
         String request = mapper.writeValueAsString(registra);
 
         // Ação
-        MockHttpServletRequestBuilder chamada = MockMvcRequestBuilders.post("/api/v1/contasdigitas/1/transacoes")
+        MockHttpServletRequestBuilder chamada = post("/api/v1/contasdigitas/1/transacoes")
                         .contentType(MediaType.APPLICATION_JSON).content(request);
 
         // Corretude
         mockMvc.perform(chamada)
                 .andExpect(
-                        MockMvcResultMatchers.status().isOk()
+                        status().isOk()
                 );
     }
 
@@ -63,13 +65,27 @@ class ContaDigitalControllerTest {
         String request = mapper.writeValueAsString(registra);
 
         // Ação
-        MockHttpServletRequestBuilder chamada = MockMvcRequestBuilders.post("/api/v1/contasdigitas/1/transacoes")
+        MockHttpServletRequestBuilder chamada = post("/api/v1/contasdigitas/1/transacoes")
                 .contentType(MediaType.APPLICATION_JSON).content(request);
 
         // Corretude
         mockMvc.perform(chamada)
                 .andExpect(
-                        MockMvcResultMatchers.status().isOk()
+                        status().isOk()
                 );
+    }
+
+    @Test
+    void NaoDeveAtualizarSaldoQuandoValorDeMovimentacaoForMenorQueZeroDeveRetornarStatus400() throws Exception {
+
+        // Ação
+        ContaDigitalRequest body = new ContaDigitalRequest(new BigDecimal("-1.0"),TipoTransacao.DEBITAR);
+        MockHttpServletRequestBuilder request = post("/api/v1/contasdigitas/1/transacoes")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                                    .content(new ObjectMapper().writeValueAsString(body));
+
+        // Corretude
+        mockMvc.perform(request)
+                        .andExpect(status().isBadRequest());
     }
 }
