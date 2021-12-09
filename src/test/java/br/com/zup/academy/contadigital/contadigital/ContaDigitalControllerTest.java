@@ -1,6 +1,5 @@
 package br.com.zup.academy.contadigital.contadigital;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,20 +7,21 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureDataJpa
+@Transactional
 class ContaDigitalControllerTest {
 
     @Autowired
@@ -101,5 +101,23 @@ class ContaDigitalControllerTest {
         // Corretude
         mockMvc.perform(request)
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void naoDeveDebitarSaldoSeIdClientNaoExistirDeveRetornarStatus404() throws Exception {
+
+        // ambiente
+        ContaDigital contaDigital = new ContaDigital(1L,new BigDecimal("1000.0"),"1","adriano@zup.com.br");
+        contaDigitalRepository.save(contaDigital);
+
+        // Ação
+        ContaDigitalRequest body = new ContaDigitalRequest(new BigDecimal("20.0"),TipoTransacao.DEBITAR);
+        MockHttpServletRequestBuilder request = post("/api/v1/contasdigitas/100/transacoes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(body));
+
+        // Corretude
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound() );
     }
 }
