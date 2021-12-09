@@ -76,7 +76,7 @@ class ContaDigitalControllerTest {
     }
 
     @Test
-    void NaoDeveAtualizarSaldoQuandoValorDeMovimentacaoForMenorQueZeroDeveRetornarStatus400() throws Exception {
+    void NaoDeveAtualizarSaldoQuandoValorDeDebitoForMenorQueZeroDeveRetornarStatus400() throws Exception {
 
         // Ação
         ContaDigitalRequest body = new ContaDigitalRequest(new BigDecimal("-1.0"),TipoTransacao.DEBITAR);
@@ -87,5 +87,19 @@ class ContaDigitalControllerTest {
         // Corretude
         mockMvc.perform(request)
                         .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void NaoDeveAtualizarSaldoQuandoValorDeCreditoForMenorQueZeroDeveRetornarStatus400() throws Exception {
+
+        // Ação
+        ContaDigitalRequest body = new ContaDigitalRequest(new BigDecimal("-1.0"),TipoTransacao.CREDITAR);
+        MockHttpServletRequestBuilder request = post("/api/v1/contasdigitas/1/transacoes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(body));
+
+        // Corretude
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
     }
 }
