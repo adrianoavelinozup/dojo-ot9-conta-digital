@@ -1,10 +1,2 @@
 INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (1,"1000.00","1","adriano@zup.com.br");
 INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (2,"1000.00","2","raphael@zup.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (3,"1000.00","3","marcio@zup.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (4,"1000.00","4","diogo.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (5,"1000.00","5","henrique@zup.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (6,"1000.00","6","igor@zup.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (7,"1000.00","7","natacha@zup.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (8,"1000.00","8","guilherme@zup.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (9,"1000.00","9","carlos@zup.com.br");
-INSERT INTO tb_contas_digitais(id_cliente, saldo, numero_conta, email) VALUES (10,"10000.00","10","yuri@zup.com.br");
